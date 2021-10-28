@@ -1,22 +1,20 @@
 ---
-title: "plotly"
+title: "Dashboard"
 output: 
-  html_document:
-    toc: true
-    toc_float: true
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+    source: embed
 ---
 
-# Loading data
-
-We're gonna look at NYC Airbnb data
-
-```{r setup, include = FALSE}
+```{r setup, include=FALSE}
+library(flexdashboard)
 library(tidyverse)
 library(p8105.datasets)
 library(plotly)
 ```
 
-```{r}
+```{r, include = FALSE}
 data("nyc_airbnb")
 nyc_airbnb = 
   nyc_airbnb %>% 
@@ -31,9 +29,10 @@ nyc_airbnb =
 nyc_airbnb
 ```
 
-# Plotly plots
+Column {data-width=650}
+-----------------------------------------------------------------------
 
-## scatterplot
+### Chart A
 
 ```{r}
 nyc_airbnb %>% 
@@ -43,9 +42,10 @@ nyc_airbnb %>%
     alpha = .5, type = "scatter", mode = "markers")
 ```
 
-## boxplot
+Column {data-width=350}
+-----------------------------------------------------------------------
 
-show price according to neighbourhood
+### Chart B
 
 ```{r}
 nyc_airbnb %>% 
@@ -55,17 +55,7 @@ nyc_airbnb %>%
     type = "box", colors = "viridis")
 ```
 
-## bar plot
-
-```{r}
-nyc_airbnb %>% 
-  count(neighbourhood) %>% 
-  mutate(neighbourhood = fct_reorder(neighbourhood, n)) %>% 
-  plot_ly(x = ~neighbourhood, y = ~n, color = ~neighbourhood,
-          type = "bar", colors = "viridis")
-```
-
-## ggplotly
+### Chart C
 
 ```{r}
 ggp_scatter = 
@@ -75,4 +65,3 @@ ggp_scatter =
 
 ggplotly(ggp_scatter)
 ```
-
