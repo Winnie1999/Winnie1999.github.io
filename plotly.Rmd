@@ -1,5 +1,5 @@
 ---
-title: "Plotly Examples"
+title: "plotly"
 output: 
   html_document:
     toc: true
